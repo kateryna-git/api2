@@ -10,7 +10,6 @@ RUN R -e "install.packages('jsonlite')"
 RUN R -e "install.packages('modeltime')"
 RUN R -e "install.packages('timetk')"
 
-COPY cars-model.rds /cars-model.rds
 COPY plumber.R /plumber.R
 COPY sales_data_sample.csv /sales_data_sample.csv
 
