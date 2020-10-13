@@ -12,7 +12,7 @@ raw_data <- read_csv("sales_data_sample.csv")
 
 
 #* Plot a time series plot of the data
-#* @serializer png
+#* @png
 #* @get /plot
 function(){
  raw_data %>%
