@@ -11,7 +11,8 @@ RUN R -e "install.packages('jsonlite')"
 RUN install2.r --error --deps TRUE \
     modeltime \
     timetk \
-    plotly 
+    plotly \
+    Cairo
 
 COPY plumber.R /plumber.R
 COPY sales_data_sample.csv /sales_data_sample.csv
