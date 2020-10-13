@@ -11,19 +11,6 @@ library(timetk)
 raw_data <- read_csv("sales_data_sample.csv") 
 
 
-#* Plot a time series plot of the data
-#* @serializer htmlwidget
-#* @get /plot
-function(){
- raw_data %>%
-    select(SALES, ORDERDATE) %>% 
-    mutate(date = mdy_hm(ORDERDATE) %>% as_datetime()) %>%
-    group_by(date) %>%
-    summarise(value = sum(SALES)) %>%
-    ungroup() %>%
-    plot_time_series(date, value, .interactive = TRUE)
-
-}
 
 
 
