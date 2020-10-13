@@ -12,7 +12,7 @@ raw_data <- read_csv("sales_data_sample.csv")
 
 
 #* Plot a time series plot of the data
-#* @png
+#* @serializer htmlwidget
 #* @get /plot
 function(){
  raw_data %>%
@@ -21,7 +21,7 @@ function(){
     group_by(date) %>%
     summarise(value = sum(SALES)) %>%
     ungroup() %>%
-    plot_time_series(date, value, .interactive = FALSE)
+    plot_time_series(date, value, .interactive = TRUE)
 
 }
 
