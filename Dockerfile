@@ -5,3 +5,9 @@ RUN apt-get install -y --no-install-recommends libxt6
 
 RUN ["install2.r", "dplyr", "forcats", "ggplot2", "jsonlite", "lubridate", "modeltime", "purrr", "readr", "remotes", "stringr", "tibble", "tidyr", "timetk"]
 RUN ["installGithub.r", "tidyverse/tidyverse@8a0bb998e92fb61339d555f22d8bf7314c625700"]
+
+
+COPY plumber.R /plumber.R
+COPY sales_data_sample.csv /sales_data_sample.csv
+
+CMD ["/plumber.R"]
