@@ -11,7 +11,6 @@ RUN apt-get update -qq && apt-get install -y \
   libcurl4-gnutls-dev
 
 # install plumber
-RUN R -e "install.packages('Cairo')"
 RUN R -e "install.packages('plumber')"
 RUN R -e "install.packages('jsonlite')"
 RUN R -e "install.packages('tidyverse')"
