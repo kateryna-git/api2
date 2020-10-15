@@ -1,7 +1,8 @@
 
 # plumber.R
 
-library(tidyverse)
+library(magrittr)
+library(dplyr)
 library(lubridate)
 library(jsonlite)
 library(modeltime)
