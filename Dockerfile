@@ -13,4 +13,4 @@ RUN chmod +x plumber.R
 COPY plumber.R /plumber.R
 COPY sales_data_sample.csv /sales_data_sample.csv
 
-CMD ["/plumber.R"]
+ENTRYPOINT ["/plumber.R"]
