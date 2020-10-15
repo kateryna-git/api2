@@ -7,6 +7,7 @@ library(lubridate)
 library(jsonlite)
 library(modeltime)
 library(timetk) 
+library(readr) 
 
 
 raw_data <- read_csv("sales_data_sample.csv") 
