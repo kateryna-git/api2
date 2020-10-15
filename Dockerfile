@@ -1,6 +1,6 @@
 FROM rocker/r-ver:4.0.2
 
-RUN apt-get install dialog
+RUN export DEBIAN_FRONTEND=noninteractive;
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install -y --no-install-recommends libxt6
 
