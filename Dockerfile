@@ -1,6 +1,8 @@
-FROM mdancho/h2o-plumber:latest
+FROM rocker/r-ver:4.0.2
 
-RUN ["install2.r", "jsonlite", "modeltime", "timetk"]
+RUN export DEBIAN_FRONTEND=noninteractive; apt-get -y update \
+  && apt-get install -y git-core
+RUN ["install2.r", "dplyr", "forcats", "ggplot2", "jsonlite", "lubridate", "modeltime", "purrr", "readr", "remotes", "stringr", "tibble", "tidyr", "timetk"]
 
 COPY plumber.R /plumber.R
 COPY sales_data_sample.csv /sales_data_sample.csv
