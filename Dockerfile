@@ -11,15 +11,15 @@ RUN apt-get update -qq && apt-get install -y \
   libcurl4-gnutls-dev
 
 # install plumber
+RUN R -e "install.packages('Cairo')"
 RUN R -e "install.packages('plumber')"
 RUN R -e "install.packages('jsonlite')"
-RUN R -e "install.packages('dplyr')"
-RUN R -e "install.packages('magrittr')"
+RUN R -e "install.packages('tidyverse')"
 RUN R -e "install.packages('timetk')"
 RUN R -e "install.packages('modeltime')"
 RUN R -e "install.packages('plotly')"
 RUN R -e "install.packages('lubridate')"
-RUN R -e "install.packages('readr')"
+
 
 # copy everything from the current directory into the container
 COPY / /
