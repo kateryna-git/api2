@@ -8,6 +8,8 @@ RUN export DEBIAN_FRONTEND=noninteractive; apt-get -y update \
   && apt-get install -y git-core
 RUN ["install2.r", "plumber",  "dplyr", "forcats", "ggplot2", "jsonlite", "lubridate", "modeltime", "purrr", "readr", "remotes", "stringr", "tibble", "tidyr", "timetk", "plotly"]
 
+RUN chmod +x plumber.R
+
 COPY plumber.R /plumber.R
 COPY sales_data_sample.csv /sales_data_sample.csv
 
