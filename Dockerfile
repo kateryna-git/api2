@@ -12,7 +12,6 @@ RUN apt-get update -qq && apt-get install -y \
 
 # install plumber
 RUN R -e "install.packages('plumber')"
-RUN R -e "install.packages('jsonlite')"
 RUN R -e "install.packages('tidyverse')"
 RUN R -e "install.packages('timetk')"
 RUN R -e "install.packages('modeltime')"
