@@ -10,7 +10,7 @@ library(timetk)
 library(readr) 
 
 
-raw_data <- read_csv("sales_data_sample.csv") 
+raw_data <- readr::read_csv("sales_data_sample.csv") 
 
 
 #* Plot a time series plot of the data
