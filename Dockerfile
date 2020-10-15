@@ -19,6 +19,7 @@ RUN R -e "install.packages('timetk')"
 RUN R -e "install.packages('modeltime')"
 RUN R -e "install.packages('plotly')"
 RUN R -e "install.packages('lubridate')"
+RUN R -e "install.packages('readr')"
 
 # copy everything from the current directory into the container
 COPY / /
