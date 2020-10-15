@@ -1,17 +1,33 @@
 FROM rocker/r-ver:4.0.2
 
+
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install -y --no-install-recommends libxt6
 
 
-RUN export DEBIAN_FRONTEND=noninteractive; apt-get -y update \
-  && apt-get install -y git-core
-RUN ["install2.r", "plumber",  "dplyr", "forcats", "ggplot2", "jsonlite", "lubridate", "modeltime", "purrr", "readr", "remotes", "stringr", "tibble", "tidyr", "timetk", "plotly"]
+# install the linux libraries needed for plumber
+RUN apt-get update -qq && apt-get install -y \
+  libssl-dev \
+  libcurl4-gnutls-dev
+
+# install plumber
+RUN R -e "install.packages('plumber')"
+
+## Install R Packages
+RUN install2.r --error --deps TRUE \
+    jsonlite \
+    lubridate \
+    plotly \
+    modeltime \
+    tidyverse
 
 
+# copy everything from the current directory into the container
+COPY / /
 
-COPY plumber.R /plumber.R
-RUN chmod +x plumber.R
-COPY sales_data_sample.csv /sales_data_sample.csv
+# open port 80 to traffic
+EXPOSE 8000
 
-CMD ["/plumber.R"]
+# when the container starts, start the main.R script
+ENTRYPOINT ["Rscript", "plumber.R"]
+
