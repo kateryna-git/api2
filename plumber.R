@@ -1,9 +1,7 @@
 
 # plumber.R
 
-library(magrittr)
-library(readr)
-library(dplyr)
+library(tidyverse)
 library(lubridate)
 library(jsonlite)
 library(modeltime)
@@ -11,7 +9,7 @@ library(timetk)
  
 
 
-raw_data <- readr::read_csv("sales_data_sample.csv") 
+raw_data <- read_csv("sales_data_sample.csv") 
 
 
 #* Plot a time series plot of the data
