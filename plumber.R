@@ -2,12 +2,13 @@
 # plumber.R
 
 library(magrittr)
+library(readr)
 library(dplyr)
 library(lubridate)
 library(jsonlite)
 library(modeltime)
 library(timetk) 
-library(readr) 
+ 
 
 
 raw_data <- readr::read_csv("sales_data_sample.csv") 
