@@ -14,7 +14,7 @@ raw_data <- read_csv("sales_data_sample.csv")
 #* Plot a time series plot of the data
 #* @serializer htmlwidget
 #* @get /plot
-plt <- function(){
+ function() {
   raw_data %>%
     select(SALES, ORDERDATE) %>% 
     mutate(date = mdy_hm(ORDERDATE) %>% as_datetime()) %>%
@@ -35,8 +35,7 @@ plt <- function(){
 #* @serializer json
 #* @post /raw_data
 
-
-preprocess_data <-function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") {
+function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") {
   
 raw_data %>%    
     select(SALES, ORDERDATE) %>% 
