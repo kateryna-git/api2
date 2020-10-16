@@ -3,12 +3,7 @@ FROM rocker/r-ver:4.0.2
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install -y --no-install-recommends libxt6
 
-
-# install the linux libraries needed for plumber
-RUN apt-get update -qq && apt-get install -y \
-
-  r-cran-xml2 \
-  r-cran-tidyverse
+  
   RUN apt-get update -qq && apt-get -y --no-install-recommends install \
   libssl-dev \             #for plumber
   libcurl4-gnutls-dev \    #for plumber
