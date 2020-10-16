@@ -8,11 +8,12 @@ RUN apt-get install -y --no-install-recommends libxt6
 RUN apt-get update -qq && apt-get install -y \
   libssl-dev \
   libcurl4-gnutls-dev \
-  r-cran-xml2
+  r-cran-xml2 \
+  r-cran-tidyverse
 
 # install plumber
 RUN R -e "install.packages('plumber')"
-RUN R -e "install.packages('tidyverse')"
+#RUN R -e "install.packages('')"
 RUN R -e "install.packages('timetk')"
 RUN R -e "install.packages('modeltime')"
 RUN R -e "install.packages('plotly')"
