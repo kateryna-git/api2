@@ -7,9 +7,8 @@ RUN apt-get install -y --no-install-recommends libxt6
 # install the linux libraries needed for plumber
 RUN apt-get update -qq && apt-get install -y \
   libssl-dev \
-  libcurl4-gnutls-dev
-
-RUN apt-get install r-cran-xml2
+  libcurl4-gnutls-dev \
+  r-cran-xml2
 
 # install plumber
 RUN R -e "install.packages('plumber')"
