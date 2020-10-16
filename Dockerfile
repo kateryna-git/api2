@@ -1,5 +1,9 @@
 FROM rocker/r-ver:4.0.2
 
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+RUN apt-get install -y --no-install-recommends libxt6
+
+
 # install the linux libraries needed for plumber
 RUN apt-get update -qq && apt-get install -y \
   libssl-dev \
