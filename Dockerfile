@@ -3,10 +3,12 @@ FROM rocker/r-ver:4.0.2
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install -y --no-install-recommends libxt6
 
+RUN apt-get update -qq && apt-get install -y \
+  libssl-dev \
+  libcurl4-gnutls-dev   
+  
   
   RUN apt-get update -qq && apt-get -y --no-install-recommends install \
-  libssl-dev \             #for plumber
-  libcurl4-gnutls-dev \    #for plumber
   libxml2-dev \            #for tydyverse
   libcairo2-dev \
   libsqlite-dev \
