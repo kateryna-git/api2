@@ -6,18 +6,46 @@ RUN apt-get install -y --no-install-recommends libxt6
 
 # install the linux libraries needed for plumber
 RUN apt-get update -qq && apt-get install -y \
-  libssl-dev \
-  libcurl4-gnutls-dev \
+
   r-cran-xml2 \
   r-cran-tidyverse
+  RUN apt-get update -qq && apt-get -y --no-install-recommends install \
+  libssl-dev \             #for plumber
+  libcurl4-gnutls-dev \    #for plumber
+  libxml2-dev \            #for tydyverse
+  libcairo2-dev \
+  libsqlite-dev \
+  libmariadbd-dev \
+  libmariadbclient-dev \
+  libpq-dev \
+  libssh2-1-dev \
+  unixodbc-dev \
+  libsasl2-dev \
+  && install2.r --error \
+    --deps TRUE \
+    tidyverse \
+    dplyr \
+    devtools \
+    formatR \
+    remotes \
+    selectr \
+    caTools \
+    BiocManager \
+    plumber \
+    timetk \
+    modeltime \
+    plotly \
+    lubridate
+  
+  
 
 # install plumber
-RUN R -e "install.packages('plumber')"
+#RUN R -e "install.packages('plumber')"
 #RUN R -e "install.packages('')"
-RUN R -e "install.packages('timetk')"
-RUN R -e "install.packages('modeltime')"
-RUN R -e "install.packages('plotly')"
-RUN R -e "install.packages('lubridate')"
+#RUN R -e "install.packages('timetk')"
+#RUN R -e "install.packages('modeltime')"
+#RUN R -e "install.packages('plotly')"
+#RUN R -e "install.packages('lubridate')"
 
 
 # copy everything from the current directory into the container
