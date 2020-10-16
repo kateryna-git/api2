@@ -9,7 +9,7 @@ RUN apt-get update -qq && apt-get install -y \
   libssl-dev \
   libcurl4-gnutls-dev
 
-#RUN sudo apt-get install r-cran-ggplot2
+RUN sudo apt-get install r-cran-xml2
 
 # install plumber
 RUN R -e "install.packages('plumber')"
