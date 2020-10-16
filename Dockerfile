@@ -22,6 +22,8 @@ COPY / /
 # open port 80 to traffic
 EXPOSE 8000
 
+ENTRYPOINT ["R", "-e", "pr <- plumber::plumb(rev(commandArgs())[1]); pr$run(host='0.0.0.0', port=8000, swagger=TRUE)"]
+
 # when the container starts, start the main.R script
-ENTRYPOINT ["Rscript", "plumber.R"]
+CMD ["Rscript", "plumber.R"]
 
