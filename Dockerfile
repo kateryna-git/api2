@@ -8,6 +8,13 @@ RUN apt-get install -y --no-install-recommends libxt6
 RUN apt-get update -qq && apt-get install -y \
   libssl-dev \
   libcurl4-gnutls-dev
+  
+RUN R -e "install.packages('plumber')"
+RUN R -e "install.packages('timetk')"
+RUN R -e "install.packages('modeltime')"
+RUN R -e "install.packages('plotly')"
+  
+  
 
 # copy everything from the current directory into the container
 COPY / /
