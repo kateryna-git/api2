@@ -1,15 +1,8 @@
 FROM rocker/r-ver:4.0.2
+FROM rocker/rstudio:3.6.3
 
-RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
-RUN apt-get install -y --no-install-recommends libxt6
-
-RUN apt-get update -qq && apt-get install -y \
-  libssl-dev \
-  libcurl4-gnutls-dev   
-  
-  
-  RUN apt-get update -qq && apt-get -y --no-install-recommends install \
-  libxml2-dev \            #for tydyverse
+RUN apt-get update -qq && apt-get -y --no-install-recommends install \
+  libxml2-dev \
   libcairo2-dev \
   libsqlite-dev \
   libmariadbd-dev \
@@ -21,29 +14,17 @@ RUN apt-get update -qq && apt-get install -y \
   && install2.r --error \
     --deps TRUE \
     tidyverse \
+    plumber \
     dplyr \
     devtools \
     formatR \
     remotes \
     selectr \
     caTools \
-    BiocManager \
-    plumber \
     timetk \
     modeltime \
     plotly \
-    lubridate
-  
-  
-
-# install plumber
-#RUN R -e "install.packages('plumber')"
-#RUN R -e "install.packages('')"
-#RUN R -e "install.packages('timetk')"
-#RUN R -e "install.packages('modeltime')"
-#RUN R -e "install.packages('plotly')"
-#RUN R -e "install.packages('lubridate')"
-
+    BiocManager
 
 # copy everything from the current directory into the container
 COPY / /
