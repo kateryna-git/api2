@@ -5,16 +5,14 @@ RUN apt-get install -y --no-install-recommends libxt6
 
 ## Install R Packages
 RUN R -e "install.packages('tidyverse')"
-RUN R -e "install.packages('lubridate')"
-RUN R -e "install.packages('jsonlite')"
+RUN R -e "install.packages('modeltime')"
+RUN R -e "install.packages('timetk')"
 
-RUN install2.r --error --deps TRUE \
-    modeltime \
-    timetk \
-    plotly \
-    Cairo
+# copy everything from the current directory into the container
+COPY / /
 
-COPY plumber.R /plumber.R
-COPY sales_data_sample.csv /sales_data_sample.csv
+# open port 80 to traffic
+EXPOSE 8000
 
-CMD ["/plumber.R"]
+# when the container starts, start the main.R script
+ENTRYPOINT ["Rscript", "main.R"]
