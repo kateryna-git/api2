@@ -3,6 +3,20 @@
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install -y --no-install-recommends libxt6
 
+
+RUN apt-get update && apt-get install -y \
+    sudo \
+    gdebi-core \
+    pandoc \
+    pandoc-citeproc \
+    libcurl4-gnutls-dev \
+    libcairo2-dev \
+    libxt-dev \
+    xtail \
+    wget
+
+
+
 ## Install R Packages
 RUN R -e "install.packages('tidyverse')"
 RUN R -e "install.packages('modeltime')"
