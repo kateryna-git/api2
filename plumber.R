@@ -7,24 +7,30 @@ library(jsonlite)
 library(modeltime)
 library(timetk) 
  
-
-
-raw_data <- read_csv("sales_data_sample.csv") 
-
-
-#* Plot a time series plot of the data
-#* @serializer htmlwidget
-#* @get /plot
-function() {
-  raw_data %>%
+# MAIN FUNCTION ----
+ 
+get_sales_data <- function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") {
+  
+  raw_data <- read_csv("sales_data_sample.csv")  #read only the needed fields to make faster
+  
+  preped_table <- raw_data %>%    
     select(SALES, ORDERDATE) %>% 
-    mutate(date = mdy_hm(ORDERDATE) %>% as_datetime()) %>%
+    mutate(date = mdy_hm(ORDERDATE) %>% as_datetime()) %>% 
+    filter(date %>% between(as_datetime(left),
+                            as_datetime(right))) %>% 
+    mutate(date = floor_date(date,  # Round dates to beginning of a period
+                             unit = time_unit)) %>% 
     group_by(date) %>%
-    summarise(value = sum(SALES)) %>%
-    ungroup() %>%
-    plot_time_series(date, value, .interactive = TRUE)
-
+    summarise(value = sum(SALES))
+  
+  return(preped_table)
 }
+
+### END POINTS ----
+
+
+#* @apiTitle Plumber Sales Analysis API
+
 
 
 
@@ -38,16 +44,18 @@ function() {
 
 function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") {
   
-raw_data %>%    
-    select(SALES, ORDERDATE) %>% 
-    mutate(date = mdy_hm(ORDERDATE) %>% as_datetime()) %>% 
-    filter(date %>% between(as_datetime(left),
-                            as_datetime(right))) %>% 
-    mutate(date = floor_date(date,  # Round dates to beginning of a period
-                             unit = time_unit)) %>% 
-    group_by(date) %>%
-    summarise(value = sum(SALES)) %>%
-    ungroup()
+get_sales_data(forecast_period, time_unit, left, right) %>% list ()
   
+}
+
+#* Plot a time series plot of the data
+#* @serializer htmlwidget
+#* @get /plot
+function() {
+  
+  sales_data <- get_sales_data() 
+  sales_data %>%
+    ungroup() %>%
+    plot_time_series(date, value, .interactive = TRUE)
 }
 
