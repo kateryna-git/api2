@@ -6,9 +6,10 @@ library(lubridate)
 library(jsonlite)
 library(modeltime)
 library(timetk) 
- 
+library(recipes) 
+
 # MAIN FUNCTION ----
- 
+
 get_sales_data <- function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") {
   
   raw_data <- read_csv("sales_data_sample.csv")  #read only the needed fields to make faster
@@ -26,19 +27,22 @@ get_sales_data <- function(forecast_period = "6 months", time_unit = "day", left
   return(preped_table)
 }
 
-#load model
-MODEL <- read_rds("model-prophet-boost.rds")
 
 
 get_predictions <- function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") {
-
+  
+  #load model
+  MODEL <- read_rds("model-prophet-boost.rds")
+  
   predictions <- MODEL %>% 
     modeltime_refit(get_sales_data(forecast_period, time_unit, left, right) %>% ungroup()) %>%
-    modeltime_forecast(h = forcast_period, actual_data = get_sales_data(forecast_period, time_unit, left, right))
+    modeltime_forecast(h = forecast_period, actual_data = get_sales_data(forecast_period, time_unit, left, right) %>%
+                         ungroup())
   
   return(predictions)
   
 }
+
 
 ### END POINTS ----
 
@@ -56,7 +60,7 @@ get_predictions <- function(forecast_period = "6 months", time_unit = "day", lef
 
 function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") {
   
-get_sales_data(forecast_period, time_unit, left, right) %>% list ()
+  get_sales_data(forecast_period, time_unit, left, right) %>% list ()
   
 }
 
@@ -83,18 +87,18 @@ function() {
 #* @serializer json
 #* @post /predict
 function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") { 
-
+  
   get_predictions(forecast_period, time_unit, left, right) %>% 
     list()
-
+  
 }
 
 #* Plot a time series plot of the data
 #* @serializer htmlwidget
 #* @get /predict_plot
 function() { 
-
-get_predictions() %>%
-  plot_modeltime_forecast(.interactive = TRUE)
-
+  
+  get_predictions() %>%
+    plot_modeltime_forecast(.interactive = TRUE)
+  
 }

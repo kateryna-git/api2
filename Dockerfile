@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y \
 RUN R -e "install.packages('tidyverse')"
 RUN R -e "install.packages('modeltime')"
 RUN R -e "install.packages('timetk')"
+RUN R -e "install.packages('recipes')"
 
 # copy everything from the current directory into the container
 COPY / /
