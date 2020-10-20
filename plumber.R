@@ -89,7 +89,7 @@ function() {
 function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") { 
   
   get_predictions(forecast_period, time_unit, left, right) %>% 
-    rename("model_desc" = ".model_desc", 
+    select(
              "key" = ".key",
              "index" = ".index",
              "value" = ".value"
