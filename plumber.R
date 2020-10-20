@@ -90,9 +90,9 @@ function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", r
   
   get_predictions(forecast_period, time_unit, left, right) %>% 
     select(
-             "key" = ".key",
-             "index" = ".index",
-             "value" = ".value"
+             key = ".key",
+             index = ".index",
+             value = ".value"
              )
   
 }
