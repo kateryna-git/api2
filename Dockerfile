@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     libcairo2-dev \
     libxt-dev \
     xtail \
-    wget
+    wget \
+    libv8-dev
 
 
 
