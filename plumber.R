@@ -26,12 +26,24 @@ get_sales_data <- function(forecast_period = "6 months", time_unit = "day", left
   return(preped_table)
 }
 
+#load model
+MODEL <- read_rds("model-prophet-boost.rds")
+
+
+get_predictions <- function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") {
+
+  predictions <- MODEL %>% 
+    modeltime_refit(get_sales_data(forecast_period, time_unit, left, right) %>% ungroup()) %>%
+    modeltime_forecast(h = forcast_period, actual_data = get_sales_data(forecast_period, time_unit, left, right))
+  
+  return(predictions)
+  
+}
+
 ### END POINTS ----
 
 
 #* @apiTitle Plumber Sales Analysis API
-
-
 
 
 #* Returns filtered data
@@ -53,9 +65,36 @@ get_sales_data(forecast_period, time_unit, left, right) %>% list ()
 #* @get /plot
 function() {
   
-  sales_data <- get_sales_data() 
+  sales_data <- get_sales_data(forecast_period, time_unit, left, right)
   sales_data %>%
     ungroup() %>%
     plot_time_series(date, value, .interactive = TRUE)
 }
 
+
+
+# PREDICTIONS ----
+
+#* Returns predictions
+#* @param forecast_period Forcast period in months
+#* @param time_unit Unit to aggregate by (month, day, week, year)
+#* @param left date range lower margin
+#* @param right date range upper margin 
+#* @serializer json
+#* @post /predict
+function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") { 
+
+  get_predictions(forecast_period, time_unit, left, right) %>% 
+    list()
+
+}
+
+#* Plot a time series plot of the data
+#* @serializer htmlwidget
+#* @get /predict_plot
+function() { 
+
+get_predictions() %>%
+  plot_modeltime_forecast(.interactive = TRUE)
+
+}
