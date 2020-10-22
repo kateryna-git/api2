@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y \
     libcairo2-dev \
     libssl-dev \
     libxml2-dev \
-    libcurl4-openssl-dev \
     libxt-dev \
     xtail \
     wget \
