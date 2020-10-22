@@ -96,7 +96,7 @@ function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", r
     group_by(.index) %>%
     summarise(
               .index = .index, 
-              .value = sum(.value), 
+              .value = mean(.value), 
               .conf_lo = mean(.conf_lo), 
               .conf_hi = mean(.conf_hi)) %>% 
     unique()
@@ -105,20 +105,6 @@ function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", r
 
 }
 
-
-
-#* Returns predictions
-#* @param forecast_period Forcast period in months
-#* @param time_unit Unit to aggregate by (month, day, week, year)
-#* @param left date range lower margin
-#* @param right date range upper margin 
-#* @serializer json
-#* @post /predict_test
-function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") { 
-  
-  get_predictions(forecast_period, time_unit, left, right)
-  
-}
 
 #* Plot a time series plot of the data
 #* @serializer htmlwidget
