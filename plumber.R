@@ -88,7 +88,9 @@ function() {
 #* @post /predict
 function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") { 
   
-  get_predictions(forecast_period, time_unit, left, right) %>%
+  predictions <- get_predictions(forecast_period, time_unit, left, right)
+  
+  pred_table <- predictions %>%
     mutate(.index = floor_date(.index,  # Round dates to beginning of a period
                              unit = time_unit)) %>%
     group_by(.index) %>%
@@ -96,8 +98,10 @@ function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", r
               .index = .index, 
               .value = sum(.value), 
               .conf_lo = mean(.conf_lo), 
-              .conf_hi = mean(.conf_hi) ) %>% 
+              .conf_hi = mean(.conf_hi)) %>% 
     unique()
+  
+  return(pred_table)
 
 }
 
