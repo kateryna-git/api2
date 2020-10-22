@@ -88,19 +88,23 @@ function() {
 #* @post /predict
 function(forecast_period = "6 months", time_unit = "day", left = "2003-01-06", right = "2005-05-31") { 
   
-  get_predictions(forecast_period, time_unit, left, right) %>% 
+  get_predictions(forecast_period, time_unit, left, right) %>%
     # select(
     #          key = ".key",
     #          index = ".index",
     #          value = ".value"
-    #          ) %>% 
+    #          ) %>%
     #aggregate predictions as well (make a separate function)
-    filter(.index %>% between(as_datetime(left),
-                            as_datetime(right))) %>% 
     mutate(.index = floor_date(.index,  # Round dates to beginning of a period
-                             unit = time_unit)) %>% 
-    group_by(.index)
-  
+                             unit = time_unit)) %>%
+    group_by(.index) %>%
+    summarise(
+              .index = .index, 
+              .value = sum(.value), 
+              .conf_lo = mean(.conf_lo), 
+              .conf_hi = mean(.conf_hi) ) %>% 
+    unique()
+
 }
 
 #* Plot a time series plot of the data
